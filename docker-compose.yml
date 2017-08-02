@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  udp_server:
+    image: udp_server
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    volumes:
+      - ".:/work"
+    ports:
+      - "10000:10000/udp"
+  udp_client:
+    image: udp_client
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    volumes:
+      - ".:/work"
+    depends_on:
+      - udp_server
+    links:
+      - udp_server
